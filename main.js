@@ -26,7 +26,7 @@ anime({
   }
 });
 
-/* ======= ADDED INTERACTIONS ======= */
+/* ======= ADDED INTERACTIONS (updated for better pwd toggle) ======= */
 document.addEventListener('DOMContentLoaded', function () {
 
   // panel toggler (Sign up / Forgot / Login)
@@ -44,21 +44,62 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // password show/hide
+  // password show/hide - improved to retain focus & caret position and add accessibility attrs
   document.querySelectorAll('.pwd-toggle').forEach(function(toggle){
+    // initialize aria/title
+    toggle.setAttribute('role','button');
+    toggle.setAttribute('tabindex','0');
+    toggle.setAttribute('aria-pressed','false');
+    toggle.setAttribute('title','Show password');
     toggle.style.cursor = 'pointer';
-    toggle.addEventListener('click', function(){
-      var input = this.parentElement.querySelector('input[type="password"], input[type="text"]');
+
+    // helper to perform toggle and restore caret
+    function doToggle(t) {
+      var input = t.parentElement.querySelector('input[type="password"], input[type="text"]');
       if (!input) return;
-      if (input.type === 'password') {
+      var wasPwd = input.type === 'password';
+      if (wasPwd) {
         input.type = 'text';
-        this.classList.remove('fa-eye-slash');
-        this.classList.add('fa-eye');
+        t.classList.remove('fa-eye-slash');
+        t.classList.add('fa-eye');
+        t.setAttribute('aria-pressed','true');
+        t.setAttribute('title','Hide password');
       } else {
         input.type = 'password';
-        this.classList.remove('fa-eye');
-        this.classList.add('fa-eye-slash');
+        t.classList.remove('fa-eye');
+        t.classList.add('fa-eye-slash');
+        t.setAttribute('aria-pressed','false');
+        t.setAttribute('title','Show password');
       }
+      // focus and move caret to end (so user can continue typing)
+      input.focus();
+      try {
+        var len = input.value.length;
+        input.setSelectionRange(len, len);
+      } catch (err) {
+        // ignore if not supported
+      }
+    }
+
+    // click/tap
+    toggle.addEventListener('click', function(e){
+      e.preventDefault();
+      doToggle(this);
+    });
+
+    // keyboard support (Enter / Space)
+    toggle.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        doToggle(this);
+      }
+    });
+
+    // on mousedown/touchstart prevent losing focus before toggle (improves mobile behavior)
+    ['mousedown','touchstart'].forEach(function(evt){
+      toggle.addEventListener(evt, function(e){
+        e.preventDefault();
+      }, {passive: false});
     });
   });
 
