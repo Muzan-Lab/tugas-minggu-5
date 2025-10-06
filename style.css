@@ -650,3 +650,198 @@ a:focus {
   /* remove large brand column fixed height on very small screens */
   .authfy-panel-left .brand-col { display: block; height: auto; padding: 20px; }
 }
+
+/* ====== REWORKED STYLES (full override/additions below) ====== */
+
+/* Reset small issues */
+* { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html,body { height:100%; margin:0; }
+
+/* Page background */
+body {
+  font-family: 'Titillium Web', sans-serif;
+  background: linear-gradient(180deg, rgba(18,24,43,0.36), rgba(18,24,43,0.06)), url("https://1.bp.blogspot.com/-fd1WXKk-TAc/XyqfngP4PiI/AAAAAAAAVMw/umQz3tkxtg43uPIy8W5og6gAkpCfjaTvACLcBGAsYHQ/w1563-h1563/bg-snell.png") no-repeat right center;
+  background-size: cover;
+  color:#324055;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  min-height:100vh;
+  padding:40px 20px;
+}
+
+/* Container */
+.container-fluid { max-width:1200px; margin:0 auto; padding:0 16px; }
+
+/* Card wrapper */
+.authfy-container {
+  display:flex;
+  gap:0;
+  margin: 4vh auto;
+  max-width:980px;
+  min-height:480px;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow: 0 18px 40px rgba(10,18,40,0.18);
+  background:transparent;
+}
+
+/* Left brand panel */
+.authfy-panel-left {
+  flex:0 0 40%;
+  background: linear-gradient(135deg,#0b1228 0%, rgba(12,14,33,0.92) 65%);
+  color:#fff;
+  padding:36px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+.brand-col { width:100%; text-align:left; }
+.brand-logo img { display:block; margin-bottom:18px; }
+.brand-col .headline p {
+  color:rgba(255,255,255,0.9);
+  margin:0 0 18px 0;
+  font-size:15px;
+}
+
+/* Social buttons stacked on left */
+.social-buttons { display:flex; gap:10px; flex-wrap:wrap; }
+.social-buttons .btn {
+  border-radius:6px;
+  padding:10px 12px;
+  font-weight:600;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+.btn-facebook { background:#3b5998; border: none; color:#fff; }
+.btn-twitter { background:#00aced; border: none; color:#fff; }
+.btn-google  { background:#db4437; border: none; color:#fff; }
+
+/* Right form panel */
+.authfy-panel-right {
+  flex:1 1 60%;
+  background: #fff;
+  padding:28px 36px;
+  display:flex;
+  align-items:center;
+  position:relative;
+}
+
+/* authfy-login wrapper */
+.authfy-login { width:100%; position:relative; height:420px; }
+
+/* Each sliding panel (keep slide animation) */
+.authfy-panel {
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  padding:20px 26px;
+  background:transparent;
+  transition: transform .48s cubic-bezier(.2,.9,.2,1), opacity .36s;
+  transform: translateX(12px);
+  opacity:0;
+}
+
+/* Active panel visible */
+.authfy-login .authfy-panel.active {
+  transform: translateX(0);
+  opacity:1;
+}
+
+/* Heading */
+.authfy-heading { margin-bottom:18px; }
+.authfy-heading .auth-title { font-size:22px; color:#1d2130; margin:0 0 6px; }
+.authfy-heading p { margin:0; color:#6b7280; font-size:14px; }
+
+/* Form controls */
+.form-control {
+  width:100%;
+  border-radius:8px;
+  border:1px solid #e1e6ef;
+  padding:12px 16px;
+  height:48px;
+  font-size:15px;
+  box-shadow: 0 6px 20px rgba(37,55,89,0.04);
+  transition: box-shadow .14s ease, border-color .14s ease;
+}
+.form-control:focus {
+  outline:none;
+  border-color:#4f77ff;
+  box-shadow: 0 8px 28px rgba(79,119,255,0.12);
+}
+
+/* Password mask wrapper */
+.pwdMask { position:relative; }
+.pwdMask .pwd-toggle {
+  position:absolute;
+  top:50%;
+  right:12px;
+  transform:translateY(-50%);
+  color:#9aa6bf;
+  font-size:18px;
+  padding:6px;
+  border-radius:6px;
+  transition: color .12s ease, background .12s ease;
+}
+.pwdMask .pwd-toggle:hover,
+.pwdMask .pwd-toggle:focus { color:#2d385e; background: rgba(77,119,255,0.06); outline:none; }
+
+/* CTA button */
+.btn-lg.btn-primary {
+  background: linear-gradient(180deg,#4f77ff,#3d61e6);
+  border:none;
+  color:#fff;
+  padding:12px 16px;
+  border-radius:10px;
+  font-weight:700;
+  font-size:15px;
+  box-shadow: 0 10px 28px rgba(79,119,255,0.18);
+}
+
+/* Remember / forgot row */
+.remember-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+
+/* Checkbox label styling */
+.checkbox .label-text { margin-left:26px; color:#687084; font-size:14px; position:relative; }
+.checkbox input[type="checkbox"] { position:absolute; left:-9999px; }
+
+/* small utilities */
+.text-center { text-align:center; }
+
+/* Toast (already present kept) */
+.snl-toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: #2d385e;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  box-shadow: 0 6px 24px rgba(45,56,94,0.18);
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .22s ease, transform .22s ease;
+  font-size: 14px;
+}
+.snl-toast.show { opacity: 1; transform: translateY(0); }
+
+/* Shake animation for validation */
+@keyframes snl-shake { 0%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}100%{transform:translateX(0)} }
+.authfy-panel.shake { animation: snl-shake .48s ease; }
+
+/* Responsive behavior */
+@media (max-width: 900px) {
+  .authfy-container { flex-direction:column; min-height:auto; margin:28px auto; }
+  .authfy-panel-left, .authfy-panel-right { flex: none; max-width:100%; width:100%; }
+  .authfy-login { height:auto; padding:12px 8px; }
+  .authfy-panel { position:relative; transform:none; opacity:1; display:none; margin-bottom:18px; background:#fff; border-radius:8px; padding:18px; box-shadow:none; }
+  .authfy_login .authfy-panel.active { display:block; }
+  .brand-col { text-align:center; padding:20px 8px; }
+  .brand-col .headline p { font-size:14px; }
+}
+
+/* tiny polish for very small screens */
+@media (max-width:420px) {
+  .form-control { height:44px; padding:10px; font-size:14px; }
+  .btn-lg.btn-primary { padding:10px; font-size:14px; }
+}
