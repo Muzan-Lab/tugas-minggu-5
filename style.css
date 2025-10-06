@@ -568,3 +568,85 @@ a:focus {
   .dust-paarticle { display: none; }
   body, html { background-position: center; }
 }
+
+/* ======= LAYOUT FIX (ADDED) ======= */
+/* make the two panels sit side-by-side reliably (uses flex but keeps bootstrap fallback) */
+.authfy-container {
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+  gap: 0;
+  min-height: 460px; /* ensure panels have same height */
+  box-sizing: border-box;
+}
+
+/* left/right column flex sizes (overrides bootstrap column widths for consistency) */
+.authfy-panel-left {
+  flex: 0 0 40%;
+  max-width: 40%;
+  position: relative; /* so ::before overlay positions correctly */
+  box-sizing: border-box;
+}
+
+.authfy-panel-right {
+  flex: 1 1 60%;
+  max-width: 60%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Ensure the sliding panels stay confined inside the right panel */
+.authfy-login {
+  position: relative; /* already set but reaffirm for flex layout */
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Keep existing absolute sliding behavior on desktop */
+.authfy-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all .45s ease;
+  opacity: 0;
+  transform: translateX(-100%);
+  box-sizing: border-box;
+}
+
+/* Active panel visible */
+.authfy-login .authfy-panel.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ---------- Responsive: stack on small screens ---------- */
+@media (max-width: 767px) {
+  .authfy-container {
+    display: block; /* revert to block so bootstrap column stacking works */
+    min-height: auto;
+    margin-top: 30px;
+  }
+
+  .authfy-panel-left,
+  .authfy-panel-right {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* On small screens make panels flow (not absolute), and show only the active panel */
+  .authfy-login { height: auto; }
+  .authfy-panel {
+    position: relative;
+    display: none;
+    transform: none;
+    opacity: 1;
+    margin-bottom: 18px;
+  }
+  .authfy-login .authfy-panel.active { display: block; }
+
+  /* remove large brand column fixed height on very small screens */
+  .authfy-panel-left .brand-col { display: block; height: auto; padding: 20px; }
+}
