@@ -493,3 +493,78 @@ a:focus {
     float: left;
 }
 }
+
+/* ======= ADDED CREATIONS ======= */
+/* center container & subtle overlay */
+.authfy-container {
+  max-width: 980px;
+  margin: 6vh auto;
+  position: relative;
+  z-index: 5;
+}
+
+/* overlay to make panels stand out on background */
+.authfy-panel-left::before,
+.authfy-panel-right::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 120px rgba(0,0,0,0.05);
+}
+
+/* heading polish */
+.authfy-heading .auth-title {
+  color: #1d2130;
+  letter-spacing: .2px;
+  margin-bottom: 6px;
+}
+
+/* stronger CTA */
+.btn-lg.btn-primary {
+  font-weight: 700;
+  letter-spacing: .3px;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn-lg.btn-primary:active { transform: translateY(1px); }
+.brand-col .social-buttons a { transition: transform .12s ease, opacity .12s ease; }
+.brand-col .social-buttons a:hover { transform: translateY(-3px); opacity: .95; }
+
+/* small toast notification */
+.snl-toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: #2d385e;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  box-shadow: 0 6px 24px rgba(45,56,94,0.18);
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .22s ease, transform .22s ease;
+  font-size: 14px;
+}
+.snl-toast.show { opacity: 1; transform: translateY(0); }
+
+/* shake animation for invalid submit */
+@keyframes snl-shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+.authfy-panel.shake { animation: snl-shake .5s ease; }
+
+/* subtle panel intro */
+.authfy-panel { will-change: transform, opacity; }
+
+/* small responsive tweak: ensure svg doesn't cover form on small screens */
+@media (max-width: 520px) {
+  .dust-paarticle { display: none; }
+  body, html { background-position: center; }
+}
